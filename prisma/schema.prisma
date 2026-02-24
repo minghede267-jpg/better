@@ -1,27 +1,12 @@
-generator client {
-  provider = "prisma-client-js"
-}
-
-datasource db {
-  provider = "mongodb"
-  url      = env("DATABASE_URL")
-}
-
-model User {
-  id      String   @id @default(auto()) @map("_id") @db.ObjectId
-  name    String?
-  credits Int      @default(3)
-  roles   Role[]
-}
-
 model Role {
   id              String   @id @default(auto()) @map("_id") @db.ObjectId
   name            String
-  appearance      String
-  personality     String
-  backgroundStory String?
-  voiceHint       String?
+  appearance      String?  // 外貌
+  personality     String?  // 性格
+  backgroundStory String?  // 背景故事
+  voiceHint       String?  // 语音/语气提示
   isPublic        Boolean  @default(false)
   userId          String   @db.ObjectId
   user            User     @relation(fields: [userId], references: [id])
+  createdAt       DateTime @default(now())
 }
